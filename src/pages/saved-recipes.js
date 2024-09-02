@@ -59,7 +59,7 @@ import { useGetUserID } from "../hooks/useGetuserId";
             </li>
           ))
         ) : (
-          <p>No saved recipes found.</p>
+          <p>No saved recipes found</p>
         )}
       </ul>
     </div>
