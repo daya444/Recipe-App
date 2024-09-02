@@ -27,7 +27,7 @@ const Login = () => {
     setError("");
 
     try {
-      const result = await axios.post("http://localhost:3001/auth/login", {
+      const result = await axios.post("https://mern-recipe-backend-3.onrender.com/auth/login", {
         username,
         password,
       });
@@ -97,7 +97,7 @@ export const Register = () => {
     setSuccess(false);
 
     try {
-      const result = await axios.post("http://localhost:3001/auth/register", {
+      const result = await axios.post("https://mern-recipe-backend-3.onrender.com/auth/register", {
         username,
         password,
       });

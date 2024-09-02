@@ -13,7 +13,7 @@ import { useGetUserID } from "../hooks/useGetuserId";
       if (userID) {
         try {
           const response = await axios.get(
-            `http://localhost:3001/recipes/savedRecipes/${userID}`
+            `https://mern-recipe-backend-3.onrender.com/recipes/savedRecipes/${userID}`
           );
           setSavedRecipes(response.data.savedRecipes);
         } catch (err) {
@@ -27,7 +27,7 @@ import { useGetUserID } from "../hooks/useGetuserId";
 
   const handleDeleteRecipe = async (recipeId) => {
     try {
-      await axios.delete(`http://localhost:3001/recipes/${recipeId}`);
+      await axios.delete(`https://mern-recipe-backend-3.onrender.com/recipes/${recipeId}`);
       setSavedRecipes(savedRecipes.filter((recipe) => recipe._id !== recipeId));
     } catch (err) {
       console.log(err);
