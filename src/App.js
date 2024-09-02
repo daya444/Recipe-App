@@ -4,6 +4,9 @@ import { Auth } from './pages/auth';
 import { CreateRecipe } from './pages/create-recipe';
 import { SavedRecipes } from './pages/saved-recipes';
 import { Navbar } from './components/navbar';
+import './App.css'; // Ensure the path is correct
+
+
 
 function App() {
   return (

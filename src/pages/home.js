@@ -1,57 +1,57 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {useGetUserID} from "../hooks/useGetuserId"
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
-  const [cookies] = useCookies(["access_token"]);
+  const userID = useGetUserID();
+  const [cookies, _] = useCookies(["access_token"]);
   const [recipes, setRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
-  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
-    if (!cookies.access_token) {
-      // Redirect to login page if not authenticated
-      navigate("/auth");
-      return;
-    }
-
     const fetchRecipes = async () => {
       try {
         const response = await axios.get("https://mern-recipe-backend-3.onrender.com/recipes", {
           headers: { authorization: cookies.access_token },
         });
         setRecipes(response.data);
+        
       } catch (error) {
         console.error(error);
       }
     };
 
     const fetchSavedRecipes = async () => {
-      try {
-        const response = await axios.get(`https://mern-recipe-backend-3.onrender.com/recipes/savedRecipes/ids/${cookies.access_token}`);
-        setSavedRecipes(response.data.savedRecipes || []); // Ensure savedRecipes is an array
-      } catch (error) {
-        console.error(error);
+      if (userID) { // Make sure userID is not null or undefined
+        try {
+          const response = await axios.get(`https://mern-recipe-backend-3.onrender.com/recipes/savedRecipes/ids/${userID}`,);
+          setSavedRecipes(response.data.savedRecipes);
+          
+        } catch (error) {
+          console.error(error);
+        }
       }
     };
 
+
     fetchRecipes();
-    fetchSavedRecipes();
-  }, [cookies.access_token, navigate]);
+    if (cookies.access_token) fetchSavedRecipes();
+  }, [userID]); // Include userID in the dependency array
 
   const saveRecipe = async (recipeID) => {
     try {
-      const response = await axios.put("https://mern-recipe-backend-3.onrender.com/recipes", { recipeID }, {
-        headers: { authorization: cookies.access_token },
-      });
-      setSavedRecipes(response.data.savedRecipes || []); // Ensure savedRecipes is an array
+      const response = await axios.put("https://mern-recipe-backend-3.onrender.com/recipes", { recipeID, userID }, {
+            headers: { authorization: cookies.access_token },
+          });
+      setSavedRecipes(response.data.savedRecipes);
     } catch (error) {
       console.error(error);
     }
   };
+ 
 
-  const isRecipeSaved = (id) => savedRecipes.includes(id || ""); // Handle undefined id
+  const isRecipeSaved = (id) => savedRecipes.includes(id);
 
   return (
     <div>
