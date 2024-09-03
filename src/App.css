@@ -1,3 +1,4 @@
+/* Base styles (for larger screens) */
 .App {
   display: flex;
   flex-direction: column;
@@ -114,4 +115,53 @@ img {
 p {
   max-width: 400px;
   font-size: 12px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 600px) {
+  .auth {
+    flex-direction: column;
+    padding: 20px;
+    height: auto;
+  }
+
+  .auth-container {
+    width: 90%;
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .navbar {
+    height: 60px;
+  }
+
+  a {
+    font-size: 20px;
+    margin: 5px;
+  }
+
+  img {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  p {
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  input,
+  textarea {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 16px;
+  }
 }
